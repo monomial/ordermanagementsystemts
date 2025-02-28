@@ -22,8 +22,8 @@ A TypeScript-based RESTful API for managing orders with versioned endpoints, bui
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd order-management-system
+git clone https://github.com/monomial/ordermanagementsystemts.git
+cd ordermanagementsystemts
 ```
 
 2. Install dependencies:
@@ -31,7 +31,8 @@ cd order-management-system
 npm install
 ```
 
-3. Create a `.env` file in the root directory:
+3. Configure Environment:
+The repository includes a default `.env` file with the following settings:
 ```env
 NODE_ENV=development
 PORT=8080
@@ -39,6 +40,11 @@ RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
 LOG_LEVEL=debug
 ```
+
+⚠️ **Security Note**: The `.env` file is currently in source control. For production deployments:
+- Create a new `.env` file with your secure settings
+- Never commit sensitive credentials to source control
+- Consider using environment-specific configuration management
 
 ## Running the Application
 
@@ -56,6 +62,11 @@ npm start
 ### Running Tests
 ```bash
 npm test
+```
+
+For running individual test files:
+```bash
+yarn test:single <filepath>
 ```
 
 ## API Documentation
@@ -76,7 +87,7 @@ The API documentation is available through Swagger UI when the application is ru
 Enhanced version with additional features:
 - `POST /` - Create a new order (with quantity)
 - `GET /` - Get active orders with pagination
-- `GET /all` - Get all orders
+- `GET /all` - Get all orders with pagination
 - `PUT /:id` - Update order status
 
 ### Example Requests
