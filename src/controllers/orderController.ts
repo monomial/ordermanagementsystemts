@@ -178,4 +178,20 @@ export class OrderController {
       next(error);
     }
   };
+
+  getPaginatedActiveOrders(page: number, limit: number) {
+    const orders = this.orderService.getActiveOrders();
+    const startIndex = (page - 1) * limit;
+    const paginatedOrders = orders.slice(startIndex, startIndex + limit);
+    
+    return {
+      data: paginatedOrders,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(orders.length / limit),
+        totalItems: orders.length,
+        itemsPerPage: limit
+      }
+    };
+  }
 } 

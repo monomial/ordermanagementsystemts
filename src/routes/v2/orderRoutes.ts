@@ -58,22 +58,11 @@ export const createV2OrderRoutes = (orderController: OrderController) => {
    */
   router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
+      const page = Math.max(1, parseInt(req.query.page as string) || 1);
+      const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string) || 10));
       
-      const orders = orderController.orderService.getActiveOrders();
-      const startIndex = (page - 1) * limit;
-      const paginatedOrders = orders.slice(startIndex, startIndex + limit);
-      
-      res.json({
-        data: paginatedOrders,
-        pagination: {
-          currentPage: page,
-          totalPages: Math.ceil(orders.length / limit),
-          totalItems: orders.length,
-          itemsPerPage: limit
-        }
-      });
+      const result = orderController.getPaginatedActiveOrders(page, limit);
+      res.json(result);
     } catch (error) {
       next(error);
     }

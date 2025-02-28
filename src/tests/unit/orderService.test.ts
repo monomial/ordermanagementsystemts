@@ -59,8 +59,9 @@ describe('OrderService', () => {
       expect(activeOrders[0].id).toBe(order2.id);
     });
 
-    it('should return orders sorted by creation date', () => {
+    it('should return orders sorted by creation date', async () => {
       const order1 = orderService.createOrder({ item: 'Item 1' });
+      await new Promise(resolve => setTimeout(resolve, 10)); // Add small delay
       const order2 = orderService.createOrder({ item: 'Item 2' });
 
       const activeOrders = orderService.getActiveOrders();
@@ -71,8 +72,9 @@ describe('OrderService', () => {
   });
 
   describe('getAllOrders', () => {
-    it('should return all orders sorted by creation date', () => {
+    it('should return all orders sorted by creation date', async () => {
       const order1 = orderService.createOrder({ item: 'Item 1' });
+      await new Promise(resolve => setTimeout(resolve, 10)); // Add small delay
       const order2 = orderService.createOrder({ item: 'Item 2' });
       orderService.updateOrderStatus(order1.id, { status: OrderStatus.Completed });
 
